@@ -1,6 +1,17 @@
 # Weather Application
 Android weather application implemented using the MVVM pattern, Kodein, Retrofit , LiveData, ViewModel, Coroutines, Room. WeatherApp fetches data from the [OpenWeatherMap API](https://openweathermap.org/api) to provide real time weather information. 
 
+# Features
+
+- [x] Landing weather list
+- [x] Landing search city weather
+- [ ] View weather details
+- [ ] Filter query weather
+- [ ] History search list, save local database 
+- [ ] Improve UX/UI
+- [ ] Add favourites cities
+- [ ] Notification daily weather
+
 ## Architecture
 The architecture of this application relies and complies with the following points below:
 * Pattern [Model-View-ViewModel](https://en.wikipedia.org/wiki/Model%E2%80%93view%E2%80%93viewmodel)(MVVM) which facilitates a separation of development of the graphical user interface.

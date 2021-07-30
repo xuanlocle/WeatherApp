@@ -4,10 +4,25 @@ plugins {
     id 'kotlin-android-extensions'
     id 'kotlin-kapt'
 }
+def localProperties = new Properties()
+def localPropertiesFile = rootProject.file('local.properties')
+if (localPropertiesFile.exists()) {
+    localPropertiesFile.withReader('UTF-8') { reader ->
+        localProperties.load(reader)
+    }
+}
 
+def apiKey = localProperties.getProperty('API_KEY')
+if (apiKey == null) {
+    apiKey = ''
+}
 android {
     compileSdkVersion 30
     buildToolsVersion "30.0.3"
+
+    lintOptions {
+        disable 'InvalidPackage'
+    }
 
     defaultConfig {
         applicationId "com.xuanlocle.weatherapp"
@@ -16,19 +31,27 @@ android {
         versionCode 1
         versionName "1.0"
         multiDexEnabled true
-
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        kapt {
+            arguments {
+                arg("room.schemaLocation", "$projectDir/schemas")
+            }
+        }
     }
 
     buildTypes {
         release {
+            debuggable false
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
             buildConfigField('String', 'HOST', "\"https://api.openweathermap.org/data/2.5/\"")
+            buildConfigField('String', 'API_KEY', apiKey.toString())
         }
         debug {
+            debuggable true
             minifyEnabled false
             buildConfigField('String', 'HOST', "\"https://api.openweathermap.org/data/2.5/\"")
+            buildConfigField('String', 'API_KEY', apiKey.toString())
 
         }
     }
@@ -45,7 +68,7 @@ android {
         dev {
             dimension 'environment'
             applicationId 'com.xuanlocle.weatherapp.dev'
-         }
+        }
         qa {
             dimension 'environment'
             applicationId 'com.xuanlocle.weatherapp'

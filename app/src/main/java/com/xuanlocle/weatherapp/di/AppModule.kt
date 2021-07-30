@@ -8,9 +8,7 @@ import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import org.kodein.di.Kodein
 import org.kodein.di.generic.*
-import retrofit2.CallAdapter
 import retrofit2.Retrofit
-import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
 
@@ -43,10 +41,29 @@ inline fun <reified T> createWebService(
 
 
 fun createOkHttpClient(): OkHttpClient {
-    val httpLoggingInterceptor = HttpLoggingInterceptor()
-    httpLoggingInterceptor.level = HttpLoggingInterceptor.Level.BODY
-    return OkHttpClient.Builder()
-        .connectTimeout(60L, TimeUnit.SECONDS)
+
+    val client = OkHttpClient.Builder()
+        .addInterceptor {
+            val original = it.request()
+            val url = original.url.newBuilder()
+                .addQueryParameter("appId", BuildConfig.API_KEY)
+                .build()
+
+            val requestBuilder = original.newBuilder()
+                .url(url)
+
+            val request = requestBuilder.build()
+            return@addInterceptor it.proceed(request)
+        }
+
+    if (BuildConfig.DEBUG) {
+        val httpLoggingInterceptor = HttpLoggingInterceptor()
+        httpLoggingInterceptor.level = HttpLoggingInterceptor.Level.BODY
+
+        client.addInterceptor(httpLoggingInterceptor)
+    }
+
+    return client.connectTimeout(60L, TimeUnit.SECONDS)
         .readTimeout(60L, TimeUnit.SECONDS)
-        .addInterceptor(httpLoggingInterceptor).build()
+        .build()
 }

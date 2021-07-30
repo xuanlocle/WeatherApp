@@ -1,0 +1,16 @@
+<resources>
+
+    <style name="ButtonStyle" parent="Widget.AppCompat.Button.ButtonBar.AlertDialog">
+        <item name="android:textColor">@color/white</item>
+        <item name="android:background">@drawable/sl_blue_radius</item>
+    </style>
+
+
+    <style name="ButtonStyle.Primary" parent="Widget.AppCompat.Button.ButtonBar.AlertDialog">
+        <item name="android:textColor">@color/white</item>
+        <item name="android:background">@drawable/sl_red_radius</item>
+        <item name="android:textSize">20sp</item>
+    </style>
+
+
+</resources>

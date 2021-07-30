@@ -1,0 +1,35 @@
+<resources>
+    <string name="app_name">Weather Forecast</string>
+
+
+    <!--Landing-->
+    <string name="weather_search_hint">Type city you want to search</string>
+
+    <!--Weather item-->
+    <string name="weather_item_date">Date: %s</string>
+    <string name="weather_item_avg_temp">Average temperature: %.1f%s</string>
+    <string name="weather_item_pressure">Pressure: %d</string>
+    <string name="weather_item_humidity">Humidity: %d</string>
+    <string name="weather_item_description">Description: %s</string>
+
+    <!--Weather Filter Dialog-->
+    <string name="weather_filter_dialog_count_title">Amount of days</string>
+    <string name="weather_filter_dialog_unit_title">Unit of temperature</string>
+    <string name="weather_filter_dialog_unit_celsius">Celcius (°C)</string>
+    <string name="weather_filter_dialog_unit_kelvin">Kelvin (K)</string>
+    <string name="weather_filter_dialog_unit_fahrenheit">Fahrenheit (°K)</string>
+
+
+    <!--Temperature Unit-->
+    <string name="temperature_unit_kelvin">K</string>
+    <string name="temperature_unit_celsius">°C</string>
+    <string name="temperature_unit_fahrenheit">°F</string>
+
+    <!--General actions-->
+    <string name="general_action_search">Get Weather</string>
+    <string name="general_action_save">Save</string>
+
+    <!--Error-->
+    <string name="error_field">This field must not be empty.</string>
+
+</resources>

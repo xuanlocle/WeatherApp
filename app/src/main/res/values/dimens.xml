@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    //Margin Padding
+    <dimen name="margin_normal">20dp</dimen>
+    <dimen name="margin_small">10dp</dimen>
+    <dimen name="margin_xsmall">15dp</dimen>
+    <dimen name="margin_minus_normal">-20dp</dimen>
+    <dimen name="margin_minus_small">-10dp</dimen>
+    <dimen name="margin_large">30dp</dimen>
+    <dimen name="margin_xlarge">40dp</dimen>
+    <dimen name="margin_tiny">5dp</dimen>
+    <dimen name="margin_tinier">3dp</dimen>
+
+</resources>

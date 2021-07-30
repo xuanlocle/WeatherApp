@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="10dp"
+    >
+
+    <TextView
+        android:id="@+id/tvWeatherDate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/weather_item_date"
+        android:textColor="@color/grey_9b" />
+
+    <TextView
+        android:id="@+id/tvWeatherAvgTemp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/weather_item_avg_temp"
+        android:textColor="@color/grey_9b" />
+
+    <TextView
+        android:id="@+id/tvWeatherPressure"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/weather_item_pressure"
+        android:textColor="@color/grey_9b" />
+
+    <TextView
+        android:id="@+id/tvWeatherHumidity"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/weather_item_humidity"
+        android:textColor="@color/grey_9b" />
+
+    <TextView
+        android:id="@+id/tvWeatherDescription"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/weather_item_description"
+        android:textColor="@color/grey_9b" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="10dp"
+        android:background="@color/grey_9b" />
+</LinearLayout>

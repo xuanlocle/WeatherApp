@@ -9,7 +9,7 @@ Android weather application implemented using the MVVM pattern, Kodein, Retrofit
 # App download
 
 Android download link：
-https://github.com/xuanlocle/WeatherApp/blob/9dd31f7a5a870d264d81ef1f6201bc0d5df16fe7/app-release-v0r1.apk
+https://github.com/xuanlocle/WeatherApp/blob/a76d85d7af88e2b363c7e7d23a671119f829193b/app-release-v0r1.apk
 
 # Features
 

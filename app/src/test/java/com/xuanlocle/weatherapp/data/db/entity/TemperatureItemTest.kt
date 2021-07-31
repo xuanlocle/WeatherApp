@@ -1,7 +1,7 @@
 package com.xuanlocle.weatherapp.data.db.entity
 
 import com.xuanlocle.weatherapp.data.model.TemperatureItem
-import com.xuanlocle.weatherapp.data.remote.request.UnitRequest
+import com.xuanlocle.weatherapp.data.model.TemperatureUnitEnum
 import org.junit.After
 import org.junit.Test
 
@@ -20,7 +20,7 @@ class TemperatureItemTest {
             33f,
             36f,
             39f,
-            30f, UnitRequest.DEFAULT
+            30f, TemperatureUnitEnum.DEFAULT
         )
     }
 

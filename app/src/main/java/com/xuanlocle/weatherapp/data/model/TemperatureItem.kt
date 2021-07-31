@@ -1,7 +1,5 @@
 package com.xuanlocle.weatherapp.data.model
 
-import com.xuanlocle.weatherapp.data.remote.request.UnitRequest
-
 data class TemperatureItem(
     val day: Float?,
     val min: Float?,
@@ -9,7 +7,7 @@ data class TemperatureItem(
     val night: Float?,
     val eve: Float?,
     val morn: Float?,
-    val unit: UnitRequest?
+    val temperatureUnit: TemperatureUnitEnum?
 ) {
     fun getAvgTemp(): Float {
         var sum = 0f

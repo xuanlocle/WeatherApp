@@ -2,11 +2,11 @@
   "formatVersion": 1,
   "database": {
     "version": 2,
-    "identityHash": "ab741b94603eba4a13d785339926feaf",
+    "identityHash": "d433610a36a286bb4cdb957a20587739",
     "entities": [
       {
         "tableName": "table_weather_list",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT, `item_date_time` INTEGER, `item_pressure` INTEGER, `item_humidity` INTEGER, `item_description` TEXT, `item_city_name_ref` TEXT, `day` REAL, `min` REAL, `max` REAL, `night` REAL, `eve` REAL, `morn` REAL, `unit` TEXT, FOREIGN KEY(`item_city_name_ref`) REFERENCES `table_weather_summary`(`item_city_name`) ON UPDATE NO ACTION ON DELETE CASCADE )",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT, `item_date_time` INTEGER, `item_pressure` INTEGER, `item_humidity` INTEGER, `item_description` TEXT, `item_city_name_ref` TEXT, `day` REAL, `min` REAL, `max` REAL, `night` REAL, `eve` REAL, `morn` REAL, `temperatureUnit` TEXT, FOREIGN KEY(`item_city_name_ref`) REFERENCES `table_weather_summary`(`item_city_name`) ON UPDATE NO ACTION ON DELETE CASCADE )",
         "fields": [
           {
             "fieldPath": "id",
@@ -81,8 +81,8 @@
             "notNull": false
           },
           {
-            "fieldPath": "temp.unit",
-            "columnName": "unit",
+            "fieldPath": "temp.temperatureUnit",
+            "columnName": "temperatureUnit",
             "affinity": "TEXT",
             "notNull": false
           }
@@ -134,7 +134,7 @@
             "notNull": false
           },
           {
-            "fieldPath": "unitTemperature",
+            "fieldPath": "temperatureUnitTemperature",
             "columnName": "item_unit",
             "affinity": "TEXT",
             "notNull": true
@@ -168,7 +168,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'ab741b94603eba4a13d785339926feaf')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'd433610a36a286bb4cdb957a20587739')"
     ]
   }
 }

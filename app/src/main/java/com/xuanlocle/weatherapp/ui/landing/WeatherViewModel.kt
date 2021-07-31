@@ -5,7 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import com.xuanlocle.weatherapp.data.model.CityItem
 import com.xuanlocle.weatherapp.data.model.WeatherDetailsItem
 import com.xuanlocle.weatherapp.data.model.WeatherItem
-import com.xuanlocle.weatherapp.data.remote.request.UnitRequest
+import com.xuanlocle.weatherapp.data.model.TemperatureUnitEnum
 import com.xuanlocle.weatherapp.data.remote.response.BaseResult
 import com.xuanlocle.weatherapp.data.remote.response.WeatherResponse
 import com.xuanlocle.weatherapp.data.repository.WeatherRepository
@@ -31,7 +31,7 @@ class WeatherViewModel(private val repository: WeatherRepository) : BaseViewMode
     fun getLatestWeather(
         cityName: String? = null,
         amount: Int? = null,
-        units: UnitRequest? = null,
+        units: TemperatureUnitEnum? = null,
     ) {
 
         if (cityName != null)
@@ -43,7 +43,7 @@ class WeatherViewModel(private val repository: WeatherRepository) : BaseViewMode
             units ?: weatherPreference.getUnitTemperature())
     }
 
-    fun fetchLatestWeather(cityName: String, amount: Int, units: UnitRequest) {
+    fun fetchLatestWeather(cityName: String, amount: Int, units: TemperatureUnitEnum) {
         showLoadingLiveData.postValue(true)
         uiScope.launch {
             val result = withContext(ioContext) {
@@ -54,7 +54,7 @@ class WeatherViewModel(private val repository: WeatherRepository) : BaseViewMode
                     weatherDetailsResponse.postValue(result.data)
                 }
                 is BaseResult.Error -> {
-                    showError.postValue("err")
+                    showError.postValue(result.error)
                 }
             }
             showLoadingLiveData.postValue(false)
@@ -85,7 +85,7 @@ class WeatherViewModel(private val repository: WeatherRepository) : BaseViewMode
                 val resp = WeatherResponse(city = CityItem(name = it?.weatherSummary?.cityName
                     ?: ""),
                     list = listMapped,
-                    unitTemperature = it?.weatherSummary?.unitTemperature ?: UnitRequest.DEFAULT)
+                    temperatureUnitTemperature = it?.weatherSummary?.temperatureUnitTemperature ?: TemperatureUnitEnum.DEFAULT)
                 weatherDetailsResponse.postValue(resp)
                 showLoadingLiveData.postValue(false)
             }

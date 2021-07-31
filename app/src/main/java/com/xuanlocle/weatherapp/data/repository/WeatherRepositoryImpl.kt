@@ -2,13 +2,14 @@ package com.xuanlocle.weatherapp.data.repository
 
 import com.xuanlocle.weatherapp.data.db.WeatherDatabase
 import com.xuanlocle.weatherapp.data.db.entity.WeatherEntity
-import com.xuanlocle.weatherapp.data.db.entity.WeatherListEntity
 import com.xuanlocle.weatherapp.data.db.entity.WeatherSummaryEntity
 import com.xuanlocle.weatherapp.data.model.WeatherItem
 import com.xuanlocle.weatherapp.data.remote.api.WeatherService
-import com.xuanlocle.weatherapp.data.remote.request.UnitRequest
+import com.xuanlocle.weatherapp.data.model.TemperatureUnitEnum
 import com.xuanlocle.weatherapp.data.remote.response.BaseResult
+import com.xuanlocle.weatherapp.data.remote.response.ErrorResponse
 import com.xuanlocle.weatherapp.data.remote.response.WeatherResponse
+import com.xuanlocle.weatherapp.util.error.HttpUtils
 
 class WeatherRepositoryImpl(
     private val database: WeatherDatabase,
@@ -18,7 +19,7 @@ class WeatherRepositoryImpl(
     override suspend fun getWeather(
         cityName: String,
         count: Int,
-        units: UnitRequest,
+        units: TemperatureUnitEnum,
     ): BaseResult<WeatherResponse> {
         return try {
             weatherService.getWeatherFromApiAsync(cityName, count, units)
@@ -26,17 +27,20 @@ class WeatherRepositoryImpl(
                 .let { weatherRes ->
                     if (weatherRes.isSuccess) {
                         weatherRes.apply {
-                            unitTemperature = units
+                            temperatureUnitTemperature = units
                         }
 
-                        insert(cityName, count, units, weatherRes.list ?: listOf())
+                        insert(weatherRes.city?.name ?: cityName,
+                            count,
+                            units,
+                            weatherRes.list ?: listOf())
                         return@let BaseResult.Success(weatherRes)
                     } else {
-                        return@let BaseResult.Error("")
+                        return@let BaseResult.Error(ErrorResponse(message = "_"))
                     }
                 }
         } catch (ex: Exception) {
-            return BaseResult.Error("")
+            return BaseResult.Error(HttpUtils.parseError(ex))
         }
     }
 
@@ -44,7 +48,7 @@ class WeatherRepositoryImpl(
     private suspend fun insert(
         city: String,
         amount: Int,
-        units: UnitRequest,
+        units: TemperatureUnitEnum,
         list: List<WeatherItem>,
     ) {
         val summary = WeatherSummaryEntity(city, amount, units)

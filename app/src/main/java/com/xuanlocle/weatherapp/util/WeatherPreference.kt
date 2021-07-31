@@ -2,7 +2,7 @@ package com.xuanlocle.weatherapp.util
 
 import android.content.Context
 import android.content.SharedPreferences
-import com.xuanlocle.weatherapp.data.remote.request.UnitRequest
+import com.xuanlocle.weatherapp.data.model.TemperatureUnitEnum
 
 class WeatherPreference(context: Context) {
 
@@ -41,16 +41,16 @@ class WeatherPreference(context: Context) {
         return sp.getInt(AMOUNT_OF_DAYS, 7)
     }
 
-    fun setUnitTemperature(unit: UnitRequest) {
-        sp.edit().putString(UNIT_TEMPERATURE_REQUEST, unit.name).apply()
+    fun setUnitTemperature(temperatureUnit: TemperatureUnitEnum) {
+        sp.edit().putString(UNIT_TEMPERATURE_REQUEST, temperatureUnit.name).apply()
     }
 
-    fun getUnitTemperature(): UnitRequest {
+    fun getUnitTemperature(): TemperatureUnitEnum {
         return when (sp.getString(UNIT_TEMPERATURE_REQUEST, "")) {
-            UnitRequest.METRIC.name -> UnitRequest.METRIC
-            UnitRequest.IMPERIAL.name -> UnitRequest.IMPERIAL
-            UnitRequest.DEFAULT.name -> UnitRequest.DEFAULT
-            else -> UnitRequest.DEFAULT
+            TemperatureUnitEnum.METRIC.name -> TemperatureUnitEnum.METRIC
+            TemperatureUnitEnum.IMPERIAL.name -> TemperatureUnitEnum.IMPERIAL
+            TemperatureUnitEnum.DEFAULT.name -> TemperatureUnitEnum.DEFAULT
+            else -> TemperatureUnitEnum.DEFAULT
         }
     }
 

@@ -14,7 +14,7 @@ if (localPropertiesFile.exists()) {
 
 def apiKey = localProperties.getProperty('API_KEY')
 if (apiKey == null) {
-    apiKey = ''
+    apiKey = "''"
 }
 
 def keystoreProperties = new Properties()
@@ -57,7 +57,7 @@ android {
 
     buildTypes {
         release {
-            debuggable true
+            debuggable false
             minifyEnabled true
             shrinkResources true
             signingConfig signingConfigs.release

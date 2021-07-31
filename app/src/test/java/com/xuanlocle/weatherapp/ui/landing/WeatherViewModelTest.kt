@@ -4,7 +4,7 @@ import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleRegistry
 import com.xuanlocle.weatherapp.data.remote.api.WeatherService
-import com.xuanlocle.weatherapp.data.remote.request.UnitRequest
+import com.xuanlocle.weatherapp.data.model.TemperatureUnitEnum
 import com.xuanlocle.weatherapp.data.repository.WeatherRepository
 import com.xuanlocle.weatherapp.data.repository.WeatherRepositoryImpl
 import com.xuanlocle.weatherapp.di.createOkHttpClient
@@ -47,7 +47,7 @@ class WeatherViewModelTest {
             // given
             val cityName = "Saigon"
             val amount = 1
-            val unit = UnitRequest.DEFAULT
+            val unit = TemperatureUnitEnum.DEFAULT
             viewModel.weatherDetailsList.observe({ lifecycle }) {}
             // when
             viewModel.fetchLatestWeather(cityName, amount, unit)

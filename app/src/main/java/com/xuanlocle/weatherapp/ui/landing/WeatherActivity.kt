@@ -1,10 +1,8 @@
 package com.xuanlocle.weatherapp.ui.landing
 
-import android.content.Context
 import android.os.Bundle
 import android.view.View
 import android.view.inputmethod.EditorInfo
-import android.view.inputmethod.InputMethodManager
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -73,8 +71,9 @@ class WeatherActivity : AppCompatActivity(), KodeinAware {
     }
 
     private fun initObserve() {
-        viewModel.showError.observe(this) {
-            rvAdapter.showEmptyResult()
+        viewModel.showError.observe(this) { errorResponse ->
+            rvAdapter.showEmptyResult(errorResponse.cod ?: "0",
+                errorResponse.message ?: "HTTP ERROR")
             tvCityName.text =
                 String.format(Resources.getString(R.string.weather_search_city_title),
                     "Not found")
@@ -83,7 +82,7 @@ class WeatherActivity : AppCompatActivity(), KodeinAware {
 
         viewModel.weatherDetailsList.observe(this, { response ->
             response.list?.let {
-                rvAdapter.updateData(response.list, response.unitTemperature)
+                rvAdapter.updateData(response.list, response.temperatureUnitTemperature)
                 tvCityName.text =
                     String.format(Resources.getString(R.string.weather_search_city_title),
                         response.city?.name ?: "")

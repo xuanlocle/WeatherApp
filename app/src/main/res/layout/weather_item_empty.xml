@@ -13,12 +13,23 @@
         android:src="@android:drawable/presence_busy" />
 
     <com.xuanlocle.weatherapp.widget.TextViewEx
-        android:id="@+id/tvWeatherEmpty"
+        android:id="@+id/tvWeatherEmptyErrorCode"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
         android:text="@string/weather_item_empty"
+        android:textAllCaps="true"
         app:fontSize="huge"
+        app:fontType="bold" />
+
+    <com.xuanlocle.weatherapp.widget.TextViewEx
+        android:id="@+id/tvWeatherEmptyMessage"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="@string/weather_item_empty"
+        android:textAllCaps="true"
+        app:fontSize="normal"
         app:fontType="bold" />
 
 </LinearLayout>

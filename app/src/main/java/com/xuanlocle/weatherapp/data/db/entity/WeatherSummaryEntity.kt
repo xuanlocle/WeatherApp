@@ -3,7 +3,7 @@ package com.xuanlocle.weatherapp.data.db.entity
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.xuanlocle.weatherapp.data.remote.request.UnitRequest
+import com.xuanlocle.weatherapp.data.model.TemperatureUnitEnum
 
 @Entity(tableName = "table_weather_summary")
 data class WeatherSummaryEntity(
@@ -13,7 +13,7 @@ data class WeatherSummaryEntity(
     @ColumnInfo(name = "item_amount")
     var amount: Int? = null,
     @ColumnInfo(name = "item_unit")
-    var unitTemperature: UnitRequest = UnitRequest.DEFAULT,
+    var temperatureUnitTemperature: TemperatureUnitEnum = TemperatureUnitEnum.DEFAULT,
     @ColumnInfo(name = "id", index = true)
     val id: Int? = null,
 )

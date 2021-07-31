@@ -41,7 +41,7 @@
         android:id="@+id/tvCityName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/weather_search_city_title_loading"
+        android:text="@string/weather_search_city_title_default"
         app:fontSize="title"
         app:fontType="bold" />
 

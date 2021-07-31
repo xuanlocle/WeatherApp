@@ -5,7 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.xuanlocle.weatherapp.R
-import com.xuanlocle.weatherapp.data.remote.request.UnitRequest
+import com.xuanlocle.weatherapp.data.model.TemperatureUnitEnum
 import com.xuanlocle.weatherapp.ui.base.BaseDialog
 import com.xuanlocle.weatherapp.weatherPreference
 import com.xuanlocle.weatherapp.widget.MutableLiveDataSingle
@@ -20,12 +20,12 @@ class FilterDialog private constructor(val mListener: FilterDialogListener?) : B
     }
 
     private val NUMPICKER_MIN_VALUE = 1
-    private val NUMPICKER_MAX_VALUE = 17
+    private val NUMPICKER_MAX_VALUE = 20
 
     private var amountDayPicked: Int = 0
-    private val unitTemperatureLiveData = MutableLiveDataSingle<UnitRequest>()
+    private val unitTemperatureLiveData = MutableLiveDataSingle<TemperatureUnitEnum>()
 
-    private lateinit var currentUnit: UnitRequest
+    private lateinit var currentTemperatureUnit: TemperatureUnitEnum
     private var currentAmount: Int = 0
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -42,14 +42,14 @@ class FilterDialog private constructor(val mListener: FilterDialogListener?) : B
             tvUnitCelcius.isSelected = false
             tvUnitKelvin.isSelected = false
             when (unitSelected) {
-                UnitRequest.METRIC -> {
+                TemperatureUnitEnum.METRIC -> {
                     tvUnitCelcius.isSelected = true
                 }
-                UnitRequest.IMPERIAL -> {
+                TemperatureUnitEnum.IMPERIAL -> {
                     tvUnitFahrenheit.isSelected = true
                 }
 
-                UnitRequest.DEFAULT -> {
+                TemperatureUnitEnum.DEFAULT -> {
                     tvUnitKelvin.isSelected = true
                 }
                 else -> {
@@ -71,18 +71,18 @@ class FilterDialog private constructor(val mListener: FilterDialogListener?) : B
         }
 
         tvUnitKelvin.setOnClickListener {
-            unitTemperatureLiveData.postValue(UnitRequest.DEFAULT)
+            unitTemperatureLiveData.postValue(TemperatureUnitEnum.DEFAULT)
         }
         tvUnitCelcius.setOnClickListener {
-            unitTemperatureLiveData.postValue(UnitRequest.METRIC)
+            unitTemperatureLiveData.postValue(TemperatureUnitEnum.METRIC)
         }
         tvUnitFahrenheit.setOnClickListener {
-            unitTemperatureLiveData.postValue(UnitRequest.IMPERIAL)
+            unitTemperatureLiveData.postValue(TemperatureUnitEnum.IMPERIAL)
         }
 
         tvSaveFilter.setOnClickListener {
             //check different
-            if (currentAmount != npCount.value || currentUnit != unitTemperatureLiveData.value) {
+            if (currentAmount != npCount.value || currentTemperatureUnit != unitTemperatureLiveData.value) {
                 saveDataToPreference(npCount.value, unitTemperatureLiveData.value)
                 mListener?.onChangeFilter()
             }
@@ -91,19 +91,19 @@ class FilterDialog private constructor(val mListener: FilterDialogListener?) : B
 
     }
 
-    private fun saveDataToPreference(count: Int, unit: UnitRequest?) {
+    private fun saveDataToPreference(count: Int, temperatureUnit: TemperatureUnitEnum?) {
         weatherPreference.setAmountOfDays(count)
-        weatherPreference.setUnitTemperature(unit ?: UnitRequest.DEFAULT)
+        weatherPreference.setUnitTemperature(temperatureUnit ?: TemperatureUnitEnum.DEFAULT)
     }
 
     private fun initData() {
         npCount.maxValue = NUMPICKER_MAX_VALUE;
         npCount.minValue = NUMPICKER_MIN_VALUE;
         currentAmount = weatherPreference.getAmountOfDays()
-        currentUnit = weatherPreference.getUnitTemperature()
+        currentTemperatureUnit = weatherPreference.getUnitTemperature()
 
         npCount.value = currentAmount
-        unitTemperatureLiveData.postValue(currentUnit)
+        unitTemperatureLiveData.postValue(currentTemperatureUnit)
     }
 
     override fun initView(

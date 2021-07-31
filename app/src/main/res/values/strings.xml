@@ -5,6 +5,7 @@
     <!--Landing-->
     <string name="weather_search_hint">Type city you want to search</string>
     <string name="weather_search_city_title">City: %s</string>
+    <string name="weather_search_city_title_default">City:</string>
     <string name="weather_search_city_title_loading">City: Loading...</string>
 
     <!--Weather item-->

@@ -13,3 +13,7 @@
 .externalNativeBuild
 .cxx
 local.properties
+key.properties
+/app/seeds.txt
+/app/mapping.txt
+/app/unused.txt

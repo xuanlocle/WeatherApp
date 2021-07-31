@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:padding="@dimen/margin_small">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -32,6 +34,14 @@
         android:layout_height="wrap_content"
         android:text="@string/general_action_search"
         android:textAllCaps="false" />
+
+    <com.xuanlocle.weatherapp.widget.TextViewEx
+        android:id="@+id/tvCityName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/weather_search_city_title_loading"
+        app:fontSize="title"
+        app:fontType="bold" />
 
     <FrameLayout
         android:layout_width="match_parent"

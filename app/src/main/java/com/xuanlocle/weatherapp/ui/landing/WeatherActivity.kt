@@ -45,7 +45,7 @@ class WeatherActivity : AppCompatActivity(), KodeinAware {
                 edtSearch.error = Resources.getString(R.string.error_field)
                 return@setOnClickListener
             }
-
+            edtSearch.error = null
             viewModel.getLatestWeather(edtSearch.text.toString())
         }
 
@@ -65,11 +65,15 @@ class WeatherActivity : AppCompatActivity(), KodeinAware {
                 rvAdapter.items = response.list
                 rvAdapter.unitTemperature = response.unitTemperature
                 rvAdapter.notifyDataSetChanged()
+                tvCityName.text =
+                    String.format(Resources.getString(R.string.weather_search_city_title),
+                        response.city?.name ?: "")
             }
         })
 
         viewModel.showLoading.observe(this, {
             if (it) {
+                tvCityName.text =Resources.getString(R.string.weather_search_city_title_loading)
                 showLoading()
             } else {
                 hideLoading()

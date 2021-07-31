@@ -18,7 +18,7 @@
         android:padding="@dimen/margin_normal">
 
 
-        <TextView
+        <com.xuanlocle.weatherapp.widget.TextViewEx
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/weather_filter_dialog_count_title"
@@ -32,7 +32,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/margin_small" />
 
-        <TextView
+        <com.xuanlocle.weatherapp.widget.TextViewEx
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/margin_normal"
@@ -46,7 +46,7 @@
             android:layout_marginTop="@dimen/margin_small"
             android:orientation="horizontal">
 
-            <TextView
+            <com.xuanlocle.weatherapp.widget.TextViewEx
                 android:id="@+id/tvUnitKelvin"
                 style="@style/ButtonStyle"
                 android:layout_width="0dp"
@@ -55,7 +55,7 @@
                 android:layout_weight="1"
                 android:text="@string/weather_filter_dialog_unit_kelvin" />
 
-            <TextView
+            <com.xuanlocle.weatherapp.widget.TextViewEx
                 android:id="@+id/tvUnitCelcius"
                 style="@style/ButtonStyle"
                 android:layout_width="0dp"
@@ -64,7 +64,7 @@
                 android:layout_weight="1"
                 android:text="@string/weather_filter_dialog_unit_celsius" />
 
-            <TextView
+            <com.xuanlocle.weatherapp.widget.TextViewEx
                 android:id="@+id/tvUnitFahrenheit"
                 style="@style/ButtonStyle"
                 android:layout_width="0dp"
@@ -75,7 +75,7 @@
 
     </LinearLayout>
 
-    <TextView
+    <com.xuanlocle.weatherapp.widget.TextViewEx
         android:id="@+id/tvSaveFilter"
         style="@style/ButtonStyle.Primary"
         android:layout_width="match_parent"

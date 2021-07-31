@@ -4,38 +4,35 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.FragmentManager
 import com.xuanlocle.weatherapp.R
 import com.xuanlocle.weatherapp.data.remote.request.UnitRequest
 import com.xuanlocle.weatherapp.ui.base.BaseDialog
+import com.xuanlocle.weatherapp.weatherPreference
 import com.xuanlocle.weatherapp.widget.MutableLiveDataSingle
 import kotlinx.android.synthetic.main.dialog_filter_weather.*
 
-class FilterDialog : BaseDialog() {
+class FilterDialog private constructor(val mListener: FilterDialogListener?) : BaseDialog() {
 
     companion object {
-        fun newInstance(): FilterDialog {
-            return FilterDialog()
+        fun newInstance(listener: FilterDialogListener?): FilterDialog {
+            return FilterDialog(listener)
         }
     }
 
     private val NUMPICKER_MIN_VALUE = 1
-    private val NUMPICKER_DEFAULT_VALUE = 7
     private val NUMPICKER_MAX_VALUE = 17
 
     private var amountDayPicked: Int = 0
     private val unitTemperatureLiveData = MutableLiveDataSingle<UnitRequest>()
 
-
-    override fun show(manager: FragmentManager, tag: String?) {
-        super.show(manager, tag)
-    }
+    private lateinit var currentUnit: UnitRequest
+    private var currentAmount: Int = 0
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        initData()
         initListener()
         initObserver()
+        initData()
 
     }
 
@@ -84,16 +81,29 @@ class FilterDialog : BaseDialog() {
         }
 
         tvSaveFilter.setOnClickListener {
+            //check different
+            if (currentAmount != npCount.value || currentUnit != unitTemperatureLiveData.value) {
+                saveDataToPreference(npCount.value, unitTemperatureLiveData.value)
+                mListener?.onChangeFilter()
+            }
             this.dismiss()
         }
 
     }
 
+    private fun saveDataToPreference(count: Int, unit: UnitRequest?) {
+        weatherPreference.setAmountOfDays(count)
+        weatherPreference.setUnitTemperature(unit ?: UnitRequest.DEFAULT)
+    }
+
     private fun initData() {
         npCount.maxValue = NUMPICKER_MAX_VALUE;
         npCount.minValue = NUMPICKER_MIN_VALUE;
-        npCount.value = NUMPICKER_DEFAULT_VALUE;
+        currentAmount = weatherPreference.getAmountOfDays()
+        currentUnit = weatherPreference.getUnitTemperature()
 
+        npCount.value = currentAmount
+        unitTemperatureLiveData.postValue(currentUnit)
     }
 
     override fun initView(
@@ -104,4 +114,8 @@ class FilterDialog : BaseDialog() {
         return inflater.inflate(R.layout.dialog_filter_weather, null)
     }
 
+}
+
+interface FilterDialogListener {
+    fun onChangeFilter()
 }

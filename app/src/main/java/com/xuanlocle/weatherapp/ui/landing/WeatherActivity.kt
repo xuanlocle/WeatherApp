@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.xuanlocle.weatherapp.R
 import com.xuanlocle.weatherapp.ui.adapter.WeatherItemAdapter
 import com.xuanlocle.weatherapp.ui.landing.dialog.FilterDialog
+import com.xuanlocle.weatherapp.ui.landing.dialog.FilterDialogListener
 import com.xuanlocle.weatherapp.util.resources.Resources
 import kotlinx.android.synthetic.main.activity_weather.*
 import org.kodein.di.KodeinAware
@@ -30,7 +31,7 @@ class WeatherActivity : AppCompatActivity(), KodeinAware {
         initListener()
         initRecyclerView()
         initObserve()
-        viewModel.getLatestWeather("china", 5)
+        viewModel.getLatestWeather()
     }
 
     private fun initListener() {
@@ -45,13 +46,17 @@ class WeatherActivity : AppCompatActivity(), KodeinAware {
                 return@setOnClickListener
             }
 
-            viewModel.getLatestWeather(edtSearch.text.toString(), 5)
+            viewModel.getLatestWeather(edtSearch.text.toString())
         }
 
     }
 
     private fun showFilterDialog() {
-        FilterDialog.newInstance().show(supportFragmentManager, FilterDialog::class.java.simpleName)
+        FilterDialog.newInstance(object : FilterDialogListener {
+            override fun onChangeFilter() {
+                viewModel.getLatestWeather()
+            }
+        }).show(supportFragmentManager, FilterDialog::class.java.simpleName)
     }
 
     private fun initObserve() {

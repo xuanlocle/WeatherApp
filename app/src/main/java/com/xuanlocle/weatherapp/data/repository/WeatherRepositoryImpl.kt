@@ -14,7 +14,7 @@ class WeatherRepositoryImpl(private val weatherService: WeatherService) : Weathe
         units: UnitRequest,
     ): BaseResult<WeatherResponse> {
         var data: WeatherResponse?
-        weatherService.getWeatherFromApi(cityName, count, units)
+        weatherService.getWeatherFromApiAsync(cityName, count, units)
             .await()
             .let {
                 if (it.isSuccess) {

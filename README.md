@@ -1,6 +1,16 @@
 # Weather Application
 Android weather application implemented using the MVVM pattern, Kodein, Retrofit , LiveData, ViewModel, Coroutines, Room. WeatherApp fetches data from the [OpenWeatherMap API](https://openweathermap.org/api) to provide real time weather information. 
 
+
+
+[App overview](https://user-images.githubusercontent.com/19778140/127747971-c591f13b-97a6-4231-bbe4-23a2a5e75099.mp4)
+
+
+# App download
+
+Android download link：
+https://github.com/xuanlocle/WeatherApp/blob/9dd31f7a5a870d264d81ef1f6201bc0d5df16fe7/app-release-v0r1.apk
+
 # Features
 
 - [x] Landing weather list

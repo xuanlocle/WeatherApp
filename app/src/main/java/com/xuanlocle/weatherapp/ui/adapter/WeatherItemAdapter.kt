@@ -5,7 +5,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.xuanlocle.weatherapp.R
-import com.xuanlocle.weatherapp.data.db.entity.WeatherItem
+import com.xuanlocle.weatherapp.data.model.WeatherItem
 import com.xuanlocle.weatherapp.data.remote.request.UnitRequest
 import com.xuanlocle.weatherapp.util.dates.DateTimeHelper
 import com.xuanlocle.weatherapp.util.resources.Resources
@@ -47,8 +47,8 @@ class WeatherItemAdapter(
             else -> {
                 (rawHolder as WeatherViewHolder).let { holder ->
                     val curWeatherItem: WeatherItem = items[position]!!
-                    val day = DateTimeHelper.convertToFormat(curWeatherItem.dt)
-                    val averageTemp = curWeatherItem.temp.getAvgTemp()
+                    val day = DateTimeHelper.convertToFormat(curWeatherItem.dt ?: 0)
+                    val averageTemp = curWeatherItem.temp?.getAvgTemp()
                     val temperatureUnit: String = getTemperatureString()
 
                     with(holder) {
@@ -69,7 +69,7 @@ class WeatherItemAdapter(
 
                         itemView.tvWeatherDescription.text =
                             String.format(Resources.getString(R.string.weather_item_description),
-                                curWeatherItem.weather.first().description ?: "Nothing")
+                                curWeatherItem.weather?.first()?.description ?: "Nothing")
 
                     }
                 }

@@ -8,6 +8,6 @@ import org.kodein.di.generic.instance
 import org.kodein.di.generic.provider
 
 val repositoryModule = Kodein.Module("repositoryModule") {
-    bind<WeatherRepository>() with provider { WeatherRepositoryImpl(instance()) }
+    bind<WeatherRepository>() with provider { WeatherRepositoryImpl(instance(), instance()) }
 
 }

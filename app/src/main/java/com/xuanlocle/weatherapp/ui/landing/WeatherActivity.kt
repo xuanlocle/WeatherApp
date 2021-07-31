@@ -1,7 +1,10 @@
 package com.xuanlocle.weatherapp.ui.landing
 
+import android.content.Context
 import android.os.Bundle
 import android.view.View
+import android.view.inputmethod.EditorInfo
+import android.view.inputmethod.InputMethodManager
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -9,6 +12,7 @@ import com.xuanlocle.weatherapp.R
 import com.xuanlocle.weatherapp.ui.adapter.WeatherItemAdapter
 import com.xuanlocle.weatherapp.ui.landing.dialog.FilterDialog
 import com.xuanlocle.weatherapp.ui.landing.dialog.FilterDialogListener
+import com.xuanlocle.weatherapp.util.WidgetUtils
 import com.xuanlocle.weatherapp.util.resources.Resources
 import kotlinx.android.synthetic.main.activity_weather.*
 import org.kodein.di.KodeinAware
@@ -31,7 +35,8 @@ class WeatherActivity : AppCompatActivity(), KodeinAware {
         initListener()
         initRecyclerView()
         initObserve()
-        viewModel.getLatestWeather()
+
+        viewModel.getLatestWeatherEntity()
     }
 
     private fun initListener() {
@@ -49,6 +54,14 @@ class WeatherActivity : AppCompatActivity(), KodeinAware {
             viewModel.getLatestWeather(edtSearch.text.toString())
         }
 
+        edtSearch.setOnEditorActionListener { v, actionId, _ ->
+            if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+                if (edtSearch.text.isNotEmpty()) {
+                    viewModel.getLatestWeather(edtSearch.text.toString())
+                }
+            }
+            false
+        }
     }
 
     private fun showFilterDialog() {
@@ -101,6 +114,8 @@ class WeatherActivity : AppCompatActivity(), KodeinAware {
 
     private fun showLoading() {
         vLoading.visibility = View.VISIBLE
+        WidgetUtils.hideSoftKeyboard(this, edtSearch)
+
     }
 
     private fun hideLoading() {

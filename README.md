@@ -5,9 +5,10 @@ Android weather application implemented using the MVVM pattern, Kodein, Retrofit
 
 - [x] Landing weather list
 - [x] Landing search city weather
+- [x] Filter query weather
+- [x] save local database 
+- [x] History search list, 
 - [ ] View weather details
-- [ ] Filter query weather
-- [ ] History search list, save local database 
 - [ ] Improve UX/UI
 - [ ] Add favourites cities
 - [ ] Notification daily weather

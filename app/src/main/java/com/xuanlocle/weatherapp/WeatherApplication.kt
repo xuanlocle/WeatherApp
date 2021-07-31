@@ -1,6 +1,7 @@
 package com.xuanlocle.weatherapp
 
 import androidx.multidex.MultiDexApplication
+import com.xuanlocle.weatherapp.di.modelModule
 import com.xuanlocle.weatherapp.di.appModule
 import com.xuanlocle.weatherapp.di.repositoryModule
 import com.xuanlocle.weatherapp.di.viewModelModule
@@ -32,7 +33,7 @@ class WeatherApplication : MultiDexApplication(), KodeinAware {
 
     override val kodein: Kodein = Kodein.lazy {
         import(androidXModule(this@WeatherApplication))
-        importAll(appModule, repositoryModule, viewModelModule)
+        importAll(modelModule, appModule, repositoryModule, viewModelModule)
     }
 
 }

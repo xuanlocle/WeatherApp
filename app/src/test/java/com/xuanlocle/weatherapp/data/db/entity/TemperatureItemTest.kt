@@ -1,8 +1,8 @@
 package com.xuanlocle.weatherapp.data.db.entity
 
+import com.xuanlocle.weatherapp.data.model.TemperatureItem
 import com.xuanlocle.weatherapp.data.remote.request.UnitRequest
 import org.junit.After
-import org.junit.Assert
 import org.junit.Test
 
 import org.junit.Assert.*

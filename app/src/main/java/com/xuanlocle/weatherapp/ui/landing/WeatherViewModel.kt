@@ -2,6 +2,9 @@ package com.xuanlocle.weatherapp.ui.landing
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.xuanlocle.weatherapp.data.model.CityItem
+import com.xuanlocle.weatherapp.data.model.WeatherDetailsItem
+import com.xuanlocle.weatherapp.data.model.WeatherItem
 import com.xuanlocle.weatherapp.data.remote.request.UnitRequest
 import com.xuanlocle.weatherapp.data.remote.response.BaseResult
 import com.xuanlocle.weatherapp.data.remote.response.WeatherResponse
@@ -59,4 +62,33 @@ class WeatherViewModel(private val repository: WeatherRepository) : BaseViewMode
 
     }
 
+    fun getLatestWeatherEntity() {
+        uiScope.launch {
+            val result = withContext(ioContext) {
+                repository.getLatestWeatherItem()
+            }
+            if (result.isEmpty() || result.firstOrNull() == null) {
+                showLoadingLiveData.postValue(false)
+                return@launch
+            }
+            result.firstOrNull().let {
+                val listMapped = mutableListOf<WeatherItem>()
+                it?.weathers?.forEach {
+                    listMapped.add(WeatherItem(dt = it.dt,
+                        humidity = it.humidity,
+                        pressure = it.pressure,
+                        temp = it.temp,
+                        weather = listOf(WeatherDetailsItem(description = it.description))
+                    ))
+                }
+
+                val resp = WeatherResponse(city = CityItem(name = it?.weatherSummary?.cityName
+                    ?: ""),
+                    list = listMapped,
+                    unitTemperature = it?.weatherSummary?.unitTemperature ?: UnitRequest.DEFAULT)
+                weatherDetailsResponse.postValue(resp)
+                showLoadingLiveData.postValue(false)
+            }
+        }
+    }
 }

@@ -1,0 +1,174 @@
+{
+  "formatVersion": 1,
+  "database": {
+    "version": 1,
+    "identityHash": "ab741b94603eba4a13d785339926feaf",
+    "entities": [
+      {
+        "tableName": "table_weather_list",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT, `item_date_time` INTEGER, `item_pressure` INTEGER, `item_humidity` INTEGER, `item_description` TEXT, `item_city_name_ref` TEXT, `day` REAL, `min` REAL, `max` REAL, `night` REAL, `eve` REAL, `morn` REAL, `unit` TEXT, FOREIGN KEY(`item_city_name_ref`) REFERENCES `table_weather_summary`(`item_city_name`) ON UPDATE NO ACTION ON DELETE CASCADE )",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "dt",
+            "columnName": "item_date_time",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "pressure",
+            "columnName": "item_pressure",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "humidity",
+            "columnName": "item_humidity",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "description",
+            "columnName": "item_description",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "cityNameRef",
+            "columnName": "item_city_name_ref",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "temp.day",
+            "columnName": "day",
+            "affinity": "REAL",
+            "notNull": false
+          },
+          {
+            "fieldPath": "temp.min",
+            "columnName": "min",
+            "affinity": "REAL",
+            "notNull": false
+          },
+          {
+            "fieldPath": "temp.max",
+            "columnName": "max",
+            "affinity": "REAL",
+            "notNull": false
+          },
+          {
+            "fieldPath": "temp.night",
+            "columnName": "night",
+            "affinity": "REAL",
+            "notNull": false
+          },
+          {
+            "fieldPath": "temp.eve",
+            "columnName": "eve",
+            "affinity": "REAL",
+            "notNull": false
+          },
+          {
+            "fieldPath": "temp.morn",
+            "columnName": "morn",
+            "affinity": "REAL",
+            "notNull": false
+          },
+          {
+            "fieldPath": "temp.unit",
+            "columnName": "unit",
+            "affinity": "TEXT",
+            "notNull": false
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "id"
+          ],
+          "autoGenerate": true
+        },
+        "indices": [
+          {
+            "name": "index_table_weather_list_item_city_name_ref",
+            "unique": false,
+            "columnNames": [
+              "item_city_name_ref"
+            ],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_table_weather_list_item_city_name_ref` ON `${TABLE_NAME}` (`item_city_name_ref`)"
+          }
+        ],
+        "foreignKeys": [
+          {
+            "table": "table_weather_summary",
+            "onDelete": "CASCADE",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "item_city_name_ref"
+            ],
+            "referencedColumns": [
+              "item_city_name"
+            ]
+          }
+        ]
+      },
+      {
+        "tableName": "table_weather_summary",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`item_city_name` TEXT NOT NULL, `item_amount` INTEGER, `item_unit` TEXT NOT NULL, `id` INTEGER, PRIMARY KEY(`item_city_name`))",
+        "fields": [
+          {
+            "fieldPath": "cityName",
+            "columnName": "item_city_name",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "amount",
+            "columnName": "item_amount",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "unitTemperature",
+            "columnName": "item_unit",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "INTEGER",
+            "notNull": false
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "item_city_name"
+          ],
+          "autoGenerate": false
+        },
+        "indices": [
+          {
+            "name": "index_table_weather_summary_id",
+            "unique": false,
+            "columnNames": [
+              "id"
+            ],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_table_weather_summary_id` ON `${TABLE_NAME}` (`id`)"
+          }
+        ],
+        "foreignKeys": []
+      }
+    ],
+    "views": [],
+    "setupQueries": [
+      "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'ab741b94603eba4a13d785339926feaf')"
+    ]
+  }
+}

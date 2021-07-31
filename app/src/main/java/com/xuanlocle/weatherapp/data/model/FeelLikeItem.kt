@@ -1,4 +1,4 @@
-package com.xuanlocle.weatherapp.data.db.entity
+package com.xuanlocle.weatherapp.data.model
 
 data class FeelLikeItem(
     val day: Float,

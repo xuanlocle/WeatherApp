@@ -13,17 +13,19 @@ class WeatherRepositoryImpl(private val weatherService: WeatherService) : Weathe
         count: Int,
         units: UnitRequest,
     ): BaseResult<WeatherResponse> {
-        var data: WeatherResponse?
-        weatherService.getWeatherFromApiAsync(cityName, count, units)
-            .await()
-            .let {
-                if (it.isSuccess) {
-                    data = it.apply { it.unitTemperature = units }
-                } else {
-                    return BaseResult.Error(Exception(it.message.toString()).toString())
+        return try {
+            weatherService.getWeatherFromApiAsync(cityName, count, units)
+                .await()
+                .let {
+                    if (it.isSuccess) {
+                        return@let BaseResult.Success(it.apply { it.unitTemperature = units })
+                    } else {
+                        return@let BaseResult.Error("")
+                    }
                 }
-            }
-        return BaseResult.Success(data)
+        } catch (ex: Exception) {
+            return BaseResult.Error("")
+        }
     }
 
 }

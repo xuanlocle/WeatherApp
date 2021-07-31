@@ -12,47 +12,71 @@ import com.xuanlocle.weatherapp.util.resources.Resources
 import kotlinx.android.synthetic.main.weather_item.view.*
 
 class WeatherItemAdapter(
-    var items: List<WeatherItem>,
-    var unitTemperature: UnitRequest = UnitRequest.DEFAULT,
-) : RecyclerView.Adapter<WeatherItemAdapter.WeatherViewHolder>() {
+    private var items: List<WeatherItem?>,
+    private var unitTemperature: UnitRequest = UnitRequest.DEFAULT,
+) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
+    private var isShowEmptyView: Boolean = false
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): WeatherViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.weather_item, parent, false)
-        return WeatherViewHolder(view)
+    override fun getItemViewType(position: Int): Int {
+        if (isShowEmptyView)
+            return -1
+        return 0;
+    }
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
+        if (viewType == -1) {
+            return WeatherViewHolder(LayoutInflater.from(parent.context)
+                .inflate(R.layout.weather_item_empty, parent, false))
+        }
+
+        return WeatherViewHolder(LayoutInflater.from(parent.context)
+            .inflate(R.layout.weather_item, parent, false))
+
     }
 
     override fun getItemCount(): Int {
         return items.size
     }
 
-    override fun onBindViewHolder(holder: WeatherViewHolder, position: Int) {
-        val curWeatherItem = items[position]
-        val day = DateTimeHelper.convertToFormat(curWeatherItem.dt)
-        val averageTemp = curWeatherItem.temp.getAvgTemp()
-        val temperatureUnit: String = getTemperatureString()
+    override fun onBindViewHolder(rawHolder: RecyclerView.ViewHolder, position: Int) {
+        when (getItemViewType(position)) {
+            -1 -> {
 
-        with(holder) {
-            itemView.tvWeatherDate.text =
-                String.format(Resources.getString(R.string.weather_item_date), day)
-            itemView.tvWeatherAvgTemp.text =
-                String.format(Resources.getString(R.string.weather_item_avg_temp),
-                    averageTemp,
-                    temperatureUnit)
+            }
+            else -> {
+                (rawHolder as WeatherViewHolder).let { holder ->
+                    val curWeatherItem: WeatherItem = items[position]!!
+                    val day = DateTimeHelper.convertToFormat(curWeatherItem.dt)
+                    val averageTemp = curWeatherItem.temp.getAvgTemp()
+                    val temperatureUnit: String = getTemperatureString()
 
-            itemView.tvWeatherPressure.text =
-                String.format(Resources.getString(R.string.weather_item_pressure),
-                    curWeatherItem.pressure)
+                    with(holder) {
+                        itemView.tvWeatherDate.text =
+                            String.format(Resources.getString(R.string.weather_item_date), day)
+                        itemView.tvWeatherAvgTemp.text =
+                            String.format(Resources.getString(R.string.weather_item_avg_temp),
+                                averageTemp,
+                                temperatureUnit)
 
-            itemView.tvWeatherHumidity.text =
-                String.format(Resources.getString(R.string.weather_item_humidity),
-                    curWeatherItem.humidity)
+                        itemView.tvWeatherPressure.text =
+                            String.format(Resources.getString(R.string.weather_item_pressure),
+                                curWeatherItem.pressure)
 
-            itemView.tvWeatherDescription.text =
-                String.format(Resources.getString(R.string.weather_item_description),
-                    curWeatherItem.weather.first().description ?: "Nothing")
+                        itemView.tvWeatherHumidity.text =
+                            String.format(Resources.getString(R.string.weather_item_humidity),
+                                curWeatherItem.humidity)
+
+                        itemView.tvWeatherDescription.text =
+                            String.format(Resources.getString(R.string.weather_item_description),
+                                curWeatherItem.weather.first().description ?: "Nothing")
+
+                    }
+                }
+            }
 
         }
+
     }
 
     private fun getTemperatureString(): String {
@@ -62,6 +86,24 @@ class WeatherItemAdapter(
             R.string.temperature_unit_fahrenheit
         else R.string.temperature_unit_kelvin
         )
+    }
+
+    fun showEmptyResult() {
+        this.items = listOf(null)
+        this.isShowEmptyView = true
+        notifyDataSetChanged();
+    }
+
+    fun updateData(list: List<WeatherItem>, unitTemperature: UnitRequest) {
+        if (list.isEmpty()) {
+            showEmptyResult()
+            return
+        }
+
+        this.isShowEmptyView = false
+        this.items = list
+        this.unitTemperature = unitTemperature
+        notifyDataSetChanged()
     }
 
     inner class WeatherViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)

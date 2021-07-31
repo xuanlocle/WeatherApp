@@ -60,11 +60,17 @@ class WeatherActivity : AppCompatActivity(), KodeinAware {
     }
 
     private fun initObserve() {
+        viewModel.showError.observe(this) {
+            rvAdapter.showEmptyResult()
+            tvCityName.text =
+                String.format(Resources.getString(R.string.weather_search_city_title),
+                    "Not found")
+            return@observe
+        }
+
         viewModel.weatherDetailsList.observe(this, { response ->
-            if (response?.list != null && response.list.isNotEmpty()) {
-                rvAdapter.items = response.list
-                rvAdapter.unitTemperature = response.unitTemperature
-                rvAdapter.notifyDataSetChanged()
+            response.list?.let {
+                rvAdapter.updateData(response.list, response.unitTemperature)
                 tvCityName.text =
                     String.format(Resources.getString(R.string.weather_search_city_title),
                         response.city?.name ?: "")
@@ -73,7 +79,7 @@ class WeatherActivity : AppCompatActivity(), KodeinAware {
 
         viewModel.showLoading.observe(this, {
             if (it) {
-                tvCityName.text =Resources.getString(R.string.weather_search_city_title_loading)
+                tvCityName.text = Resources.getString(R.string.weather_search_city_title_loading)
                 showLoading()
             } else {
                 hideLoading()

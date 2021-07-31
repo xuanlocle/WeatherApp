@@ -13,6 +13,7 @@
     <string name="weather_item_pressure">Pressure: %d</string>
     <string name="weather_item_humidity">Humidity: %d</string>
     <string name="weather_item_description">Description: %s</string>
+    <string name="weather_item_empty">NOT FOUND!</string>
 
     <!--Weather Filter Dialog-->
     <string name="weather_filter_dialog_count_title">Amount of days</string>

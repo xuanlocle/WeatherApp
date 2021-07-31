@@ -5,7 +5,7 @@ import com.xuanlocle.weatherapp.data.db.entity.WeatherItem
 import com.xuanlocle.weatherapp.data.remote.request.UnitRequest
 
 data class WeatherResponse(
-    val cod: Int?,
+    val cod: String?,
     val message: Float?,
 
     val city: CityItem?,
@@ -15,5 +15,5 @@ data class WeatherResponse(
     var unitTemperature: UnitRequest = UnitRequest.DEFAULT
 ) {
     val isSuccess: Boolean
-        get() = cod == 200
+        get() = cod == "200"
 }

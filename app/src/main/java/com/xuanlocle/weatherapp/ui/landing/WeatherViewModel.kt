@@ -42,7 +42,6 @@ class WeatherViewModel(private val repository: WeatherRepository) : BaseViewMode
 
     fun fetchLatestWeather(cityName: String, amount: Int, units: UnitRequest) {
         showLoadingLiveData.postValue(true)
-
         uiScope.launch {
             val result = withContext(ioContext) {
                 repository.getWeather(cityName, amount, units)
@@ -52,11 +51,12 @@ class WeatherViewModel(private val repository: WeatherRepository) : BaseViewMode
                     weatherDetailsResponse.postValue(result.data)
                 }
                 is BaseResult.Error -> {
-//                    showError.value = result.errorMessage
+                    showError.postValue("err")
                 }
             }
             showLoadingLiveData.postValue(false)
         }
+
     }
 
 }

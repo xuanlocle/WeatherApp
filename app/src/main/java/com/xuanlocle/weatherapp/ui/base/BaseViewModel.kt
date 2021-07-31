@@ -1,7 +1,7 @@
 package com.xuanlocle.weatherapp.ui.base
 
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.xuanlocle.weatherapp.widget.MutableLiveDataSingle
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -14,6 +14,7 @@ abstract class BaseViewModel : ViewModel() {
     protected lateinit var uiScope: CoroutineScope
     protected lateinit var ioContext: CoroutineContext
 
+    val showError = MutableLiveDataSingle<String>()
 
     fun init() {
         onCreate()

@@ -76,7 +76,7 @@ class WeatherActivity : AppCompatActivity(), KodeinAware {
                 errorResponse.message ?: "HTTP ERROR")
             tvCityName.text =
                 String.format(Resources.getString(R.string.weather_search_city_title),
-                    "Not found")
+                    Resources.getString(R.string.weather_search_city_not_found))
             return@observe
         }
 
@@ -113,6 +113,7 @@ class WeatherActivity : AppCompatActivity(), KodeinAware {
 
     private fun showLoading() {
         vLoading.visibility = View.VISIBLE
+        edtSearch.error = null
         WidgetUtils.hideSoftKeyboard(this, edtSearch)
 
     }
